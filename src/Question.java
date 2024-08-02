@@ -1,8 +1,59 @@
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class Question {
     public void runQuest() {
+        Scanner scanner = new Scanner(System.in);
+        int score = 0;
+        List<Integer> answerList = new ArrayList<>();
+
+        Integer[] scoreArr = {10, 15, 10, 5};
+        String[] quesArr = {"Python에서 변수를 선언하는 방법은?", "Python에서 리스트(List)의 특징은 무엇인가요?",
+                "Python에서 조건문을 작성하는 방법은?", "Python에서 함수를 정의하는 방법은?"};
+        String[] quesArr01 = {"var name", "name = value", "set name", "name == value"};
+        String[] quesArr02 = {"순서가 있고 변경 가능하다", "중복된 값을 가질 수 없다", "원소를 추가하거나 삭제할 수 없다", "정렬된 상태로 유지된다"};
+        String[] quesArr03 = {"if-else", "for-in", "while", "def"};
+        String[] quesArr04 = {"class", "def", "import", "return"};
+        List<String> quesList01 = Arrays.asList(quesArr01);
+        List<String> quesList02 = Arrays.asList(quesArr02);
+        List<String> quesList03 = Arrays.asList(quesArr03);
+        List<String> quesList04 = Arrays.asList(quesArr04);
+        List[] questionArr = {quesList01, quesList02, quesList03, quesList04};
+
+        Integer[] indexArr = {0, 1, 2, 3};
+        List<Integer> indexList = Arrays.asList(indexArr);
+        Collections.shuffle(indexList);
+
+        for (int i = 0; i < quesArr.length; i++) {
+            int idx = indexList.get(i);
+            System.out.println((i + 1) + ". " + quesArr[idx] + " (점수 : " + scoreArr[idx] + "점)");
+            Collections.shuffle(questionArr[idx]);
+            for (int j = 0; j < questionArr[idx].size(); j++) {
+                if (j > 0) System.out.print(" ");
+                System.out.print((j + 1) + ") " + questionArr[idx].get(j));
+            }
+            System.out.print("\n" + "-정답 : ");
+            int answer = scanner.nextInt();
+            answerList.add(answer);
+            if (questionArr[idx].get(answer - 1).equals("name == value")) score += scoreArr[idx];
+            else if (questionArr[idx].get(answer - 1).equals("중복된 값을 가질 수 없다")) score += scoreArr[idx];
+            else if (questionArr[idx].get(answer - 1).equals("while")) score += scoreArr[idx];
+            else if (questionArr[idx].get(answer - 1).equals("def")) score += scoreArr[idx];
+        }
+
+        System.out.println("—----- 결과 —-------------");
+        System.out.print("응답한 내용 : ");
+        for (int i = 0; i < answerList.size(); i++) {
+            System.out.print(i + 1 + "번 " + answerList.get(i) + ", ");
+        }
+        System.out.println("\n당신 응답 합계 : " + score + "점");
+        String grade = "";
+        if (score > 30) grade = "A";
+        else if (score > 20) grade = "B";
+        else if (score > 10) grade = "C";
+        else grade = "F";
+        System.out.println("학점은 " + grade + "입니다");
+    }
+    /*public void runQuest() {
 
         // 문제 생성
         ArrayList<HashMap<String, String>> questions = getQuestions();
@@ -19,10 +70,13 @@ public class Question {
         // 결과 출력
         printResult(userResponses, userScore, grade);
 
+//         DB 연결 테스트
+//        QuestSql questSql = new QuestSql();
+//        questSql.makeQuest(questions);
     }
 
     public ArrayList<HashMap<String, String>> getQuestions() {
-        /* 문제 리스트 생성 */
+        *//* 문제 리스트 생성 *//*
         ArrayList<HashMap<String, String>> questions = new ArrayList<>();
 
         // 첫 번째 문제
@@ -68,7 +122,7 @@ public class Question {
     }
 
     public ArrayList<String> getResponses() {
-        /* 응답 리스트 생성 */
+        *//* 응답 리스트 생성 *//*
         ArrayList<String> userResponses = new ArrayList<>();
         userResponses.add("4");
         userResponses.add("2");
@@ -115,5 +169,5 @@ public class Question {
                 + userResponses.get(3));
         System.out.println("당신 응답 합계 : " + userScore + "점");
         System.out.println("학점은 " + grade + " 입니다.");
-    }
+    }*/
 }
